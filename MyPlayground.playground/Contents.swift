@@ -57,3 +57,17 @@ func reverse(_ x: Int) -> Int {
 reverse(1534236469)
 
 
+func isPalindrome(_ x: Int) -> Bool {
+  if x<0 || (x % 10 == 0 && x != 0) { // negatives are not palindromes and X mod 10 = 0 --> not a palindrome
+    return false
+  }
+  var reverted = 0
+  var xCopy = x
+  while x > reverted {
+    reverted = (reverted * 10) + (xCopy % 10)
+    xCopy /= 10
+  }
+  return reverted == x || x == reverted/10
+}
+
+isPalindrome(121)
