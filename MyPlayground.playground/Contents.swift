@@ -71,3 +71,104 @@ func isPalindrome(_ x: Int) -> Bool {
 }
 
 isPalindrome(121)
+
+class RomanSolution {
+	enum Roman: String {
+		case I
+		case V
+		case X
+		case L
+		case C
+		case D
+		case M
+
+		var intValue: Int {
+			switch self {
+			case .I:
+				return 1
+			case .V:
+				return 5
+			case .X:
+				return 10
+			case .L:
+				return 50
+			case .C:
+				return 100
+			case .D:
+				return 500
+			case .M:
+				return 1000
+			}
+		}
+
+		static func + (lhs: Roman, rhs: Roman) -> Int {
+			return lhs.intValue + rhs.intValue
+		}
+
+		static func - (lhs: Roman, rhs: Roman) -> Int {
+			return lhs.intValue - rhs.intValue
+		}
+	}
+
+
+	func romanToInt(_ s: String) -> Int {
+		var result: Int = 0
+
+		let components = s.compactMap { String($0) }
+
+		var index: Int = 0
+
+		while index < components.count {
+			if let currentRoman = Roman(rawValue: components[index]) {
+				switch currentRoman {
+				case .I:
+					if index == components.count - 2,
+						let last = components.last,
+						let nextRoman = Roman(rawValue: last),
+						(nextRoman == .V || nextRoman == .X) {
+						result += (nextRoman - currentRoman)
+						index += 1
+					} else {
+						result += currentRoman.intValue
+					}
+					index += 1
+				case .V:
+					result += currentRoman.intValue
+					index += 1
+				case .X:
+					if index+1 < components.count,
+						let nextRoman = Roman(rawValue: components[index+1]),
+						(nextRoman == .L || nextRoman == .C) {
+						result += (nextRoman - currentRoman)
+						index += 1
+					} else {
+						result += currentRoman.intValue
+					}
+					index += 1
+				case .L:
+					result += currentRoman.intValue
+					index += 1
+				case .C:
+					if index+1 < components.count,
+						let nextRoman = Roman(rawValue: components[index+1]),
+						(nextRoman == .D || nextRoman == .M) {
+						result += (nextRoman - currentRoman)
+						index += 1
+					} else {
+						result += currentRoman.intValue
+					}
+					index += 1
+				case .D:
+					result += currentRoman.intValue
+					index += 1
+				case .M:
+					result += currentRoman.intValue
+					index += 1
+				}
+			}
+		}
+
+		return result
+	}
+}
+// RomanSolution().romanToInt("MCMXCIV")
