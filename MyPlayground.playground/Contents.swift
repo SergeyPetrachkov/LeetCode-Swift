@@ -218,3 +218,53 @@ func removeDuplicates(_ nums: inout [Int]) -> Int {
 //var array = [0,0,1,1,1,2,2,3,3,4]
 //removeDuplicates(&array)
 //print(array)
+
+/**
+ * Definition for singly-linked list.
+ * */
+public class ListNode {
+  public var val: Int
+  public var next: ListNode?
+  public init(_ val: Int) {
+    self.val = val
+    self.next = nil
+  }
+}
+
+
+func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+  
+  var l1 = l1
+  
+  var l2 = l2
+  
+  
+  let result = ListNode(0)
+  var curNode: ListNode? = nil
+  curNode = result
+  
+  var carry = 0
+  
+  while l1 != nil || l2 != nil {
+    
+    var nextValue = carry
+    
+    if let l1Val = l1?.val {
+      nextValue += l1Val
+    }
+    if let l2Val = l2?.val {
+      nextValue += l2Val
+    }
+    carry = nextValue / 10
+    
+    curNode?.next = ListNode(nextValue % 10)
+    curNode = curNode?.next
+    
+    l1 = l1?.next
+    l2 = l2?.next
+  }
+  if carry > 0 {
+    curNode?.next = ListNode(carry)
+  }
+  return result.next
+}
