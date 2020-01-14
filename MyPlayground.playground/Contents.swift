@@ -268,3 +268,43 @@ func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
   }
   return result.next
 }
+
+/// https://leetcode.com/problems/string-to-integer-atoi/
+func myAtoi(_ str: String) -> Int {
+	if str == "+" || str == "-" {
+		return 0
+	}
+	var result: Int = 0
+	var filteredString = ""
+	var isNegative = false
+
+	for char in str {
+		if char == " " && filteredString.isEmpty {
+			continue
+		}
+
+		if (char == "-" || char == "+") && filteredString.isEmpty {
+			filteredString.append(char)
+			isNegative = char == "-"
+		} else {
+
+			if ["0","1","2","3","4","5","6","7","8","9"].contains(char) {
+				filteredString.append(char)
+			} else {
+				break
+			}
+		}
+
+	}
+
+	if let int32 = Int32(filteredString) {
+		return Int(int32)
+	} else {
+		if filteredString.isEmpty == false && filteredString != "-" && filteredString != "+" {
+			result = isNegative ? Int(Int32.min) : Int(Int32.max)
+		}
+	}
+	return result
+}
+
+myAtoi("   +0 123")
