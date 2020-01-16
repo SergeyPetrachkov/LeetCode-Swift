@@ -358,3 +358,27 @@ func lengthOfLastWord(_ s: String) -> Int {
   return length
 }
 
+https://leetcode.com/problems/plus-one/
+func plusOne(_ digits: [Int]) -> [Int] {
+  var carry = 0
+  var result = [Int]()
+  var index = digits.count - 1
+  while index >= 0 {
+    var next = 0
+    if index == digits.count - 1 {
+      next = (digits[index] + 1)
+      carry = next / 10
+      next = next % 10
+    } else {
+      next = (digits[index] + carry) % 10
+      carry = (next == 0 && digits[index] != 0) ? 1 : next / 10
+    }
+    result.insert(next, at: 0)
+    
+    index -= 1
+  }
+  if carry > 0 {
+    result.insert(1, at: 0)
+  }
+  return result
+}
