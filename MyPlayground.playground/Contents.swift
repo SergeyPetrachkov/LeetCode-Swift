@@ -358,7 +358,7 @@ func lengthOfLastWord(_ s: String) -> Int {
   return length
 }
 
-https://leetcode.com/problems/plus-one/
+//https://leetcode.com/problems/plus-one/
 func plusOne(_ digits: [Int]) -> [Int] {
   var carry = 0
   var result = [Int]()
@@ -382,3 +382,17 @@ func plusOne(_ digits: [Int]) -> [Int] {
   }
   return result
 }
+// https://leetcode.com/problems/maximum-subarray/
+func maxSubArray(_ nums: [Int]) -> Int {
+  if nums.isEmpty {
+    return 0
+  }
+  var sum = nums[0]
+  var currentMax = sum
+  for i in 1..<nums.count {
+    currentMax = max(nums[i], nums[i]+currentMax)
+    sum = max(sum, currentMax)
+  }
+  return sum
+}
+
